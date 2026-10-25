@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Play | Keyflow</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+<header>
+    <a class="logo" href="index.html">Keyflow</a>
+    <nav aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="play.html" aria-current="page">Play</a>
+    </nav>
+</header>
+
+<main>
+    <section class="view show" id="home">
+        <p class="lead">Pick what you want to type.</p>
+        <ul class="cats" id="cats"></ul>
+        <div class="custom-box" id="customBox">
+            <textarea id="customText" aria-label="Your text" placeholder="Paste a few sentences here"></textarea>
+            <p class="msg" id="customMsg"></p>
+            <button class="btn" id="customGo">Use this text</button>
+        </div>
+    </section>
+
+    <section class="view" id="time">
+        <p class="lead">How long do you want to type?</p>
+        <p class="chosen"><b id="timeCat"></b> <a href="#/">Change category</a></p>
+        <div class="times" id="times">
+            <button class="time" data-s="15">15 sec</button>
+            <button class="time" data-s="30">30 sec</button>
+            <button class="time" data-s="60">1 min</button>
+            <button class="time" data-s="120">2 min</button>
+        </div>
+        <div class="custom-time">
+            <label for="customTime">Custom time in seconds</label>
+            <input id="customTime" type="number" min="5" max="600" inputmode="numeric" placeholder="45">
+            <button class="btn" id="customTimeGo">Start</button> 
+        </div>
+        <p class="msg" id="timeMsg"></p>
+    </section>
+
+    <section class="view" id="test">
+        <div class="vine" aria-hidden="true"><div class="stem" id="stem"></div><div class="leaf" id="leaf"></div></div>
+        <div class="topline"><div class="clock" id="clock">30</div><div class="catName"></div></div>
+        <div class="field idle" id="field"><div class="words" id="words"><div class="caret" id="caret"></div></div></div>
+        <p class="hint">Click the words and start typing. <kbd>Tab</kbd> restarts, <kbd>Esc</kbd> goes back.</p>
+    </section>
+
+    <section class="view" id="results" aria-live="polite">
+        <div class="big"><span id="rWpm">0</span><small>wpm</small></div>
+        <div class="stats">
+            <div><span>accuracy</span><b id="rAcc">0%</b></div>
+            <div><span>correct characters</span><b id="rChars">0</b></div>
+            <div><span>category</span><b id="rCat"></b></div>
+            <div><span>time</span><b id="rTime">30s</b></div>
+        </div>
+            <div class="actions">
+                <button class="btn" id="again">Try again</button>
+                <a class="btn ghost" id="changeTime" href="#/">Change time</a>
+                <a class="btn ghost" href="#/">Change category</a>
+        </div>
+    </section>
+</main>
+
+<input id="capture" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Typing input">
+
+<script src="texts.js"></script>
+<script src="app.js"></script>
+    </body>
+</html>
