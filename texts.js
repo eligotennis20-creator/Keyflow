@@ -92,14 +92,14 @@ let customText = "";
 const CATS = {
     everyday: { name: "Everyday stories", desc: "Short, easy passages.", sample: "The library opens at nine.",
         gen: n => fromPassages(EVERYDAY, n) },
-    bigwords: { name: "Big Words", desc: "Short sayings, full sentences.", sample: "A remarkable constellation.",
+    bigwords: { name: "Big words", desc: "Sentences full of long words.", sample: "A remarkable constellation.",
         gen: n => fromPassages(BIGWORDS, n) },
-    proverbs: { name: "Proverbs", desc: "Times, prices, and facts.", sample: "Practice makes perfect.",
+    proverbs: { name: "Proverbs", desc: "Short sayings, full sentences.", sample: "Practice makes perfect.",
         gen: n => fromPassages(PROVERBS, n) },
     numbers: { name: "Numbers", desc: "Times, prices and facts.", sample: "The train leaves at 7:45.",
         gen: n => fromPassages(NUMBERS, n) },
     code: { name: "Code", desc: "Brackets, arrows and quotes.", sample: "items.filter(n => n > 3);",
-        gen: n => fromPassages(CODE, n ) },
+        gen: n => fromPassages(CODE, n) },
     custom: { name: "Your own text", desc: "Paste anything and type it.", sample: "Your homework, a song, a story.",
         gen: n => fromPassages([customText], n) }
 };

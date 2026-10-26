@@ -18,7 +18,7 @@ $("cats").addEventListener("click", e => {
 
 $("customGo").addEventListener("click", () => {
     const t = $("customText").value.trim().replace(/\s+/g, " ");
-    if (t.split(" ").length < 5){ $("customMsg").textContent = "Paste at least 5 words to start"; return; }
+    if (t.split(" ").length < 5){ $("customMsg").textContent = "Paste at least 5 words to start."; return; }
     customText = t; $("customMsg").textContent = ""; location.hash = "#/custom";
 });
 
@@ -40,6 +40,7 @@ $("customTimeGo").addEventListener("click", startCustomTime);
 $("customTime").addEventListener("keydown", e => { if (e.key === "Enter") startCustomTime(); });
 
 function show(v){
+    view = v;
     ["home", "time", "test", "results"].forEach(id => $(id).classList.toggle("show", id === v));
 }
 
@@ -70,7 +71,7 @@ function paintCurrent(){
     const el = wordEl(wi), target = words[wi];
     el.querySelectorAll(".extra").forEach(x => x.remove());
     el.querySelectorAll(".l:not(.extra)").forEach((l, i) => {
-        l.className = "l" + (i < typed.lenght ? (typed[i] === target[i] ? " ok" : " bad") : "");
+        l.className = "l" + (i < typed.length ? (typed[i] === target[i] ? " ok" : " bad") : "");
 
     });
     for (let i = target.length; i < typed.length; i++){
@@ -108,12 +109,13 @@ function begin(){
 function finish(){
     if (finished) return;
     finished = true; clearInterval(tick);
-    if (typed && words [wi].startsWith(typed)) correctChars +=typed.length;
+    if (typed && words[wi].startsWith(typed)) correctChars += typed.length;
     $("rWpm").textContent = Math.round((correctChars / 5) / (duration / 60));
     $("rAcc").textContent = total ? Math.round(good / total * 100) + "%" : "0%";
     $("rChars").textContent = correctChars;
     $("rCat").textContent = CATS[cat].name;
-    $("rTime").textContent = "#/" + cat;
+    $("rTime").textContent = duration < 60 ? duration + "s" : fmt(duration);
+    $("changeTime").href = "#/" + cat;
     show("results"); input.blur();
 }
 
@@ -137,7 +139,7 @@ function typeChar(c){
 
 function nextWord(){
     if (finished || !typed) return;
-    if (typed === words[wi].length) correctChars += typed + 1;
+    if (typed === words[wi]) correctChars += typed.length + 1;
     else if (typed.length < words[wi].length) wordEl(wi).classList.add("skipped");
     wi++; typed = ""; paintCurrent();
 }
@@ -148,8 +150,9 @@ function backspace(){
 }
 
 const SYMBOLS = { Minus:["-","_"], Equal:["=","+"], BracketLeft:["[","{"], BracketRight:["]","}"], Backslash:["\\","|"],
-    Semicolon:[";",":"], Quote:["'",'"'], Comma:[",","<"], Period:[".",">"], Backquote:["`","~"] };
+    Semicolon:[";",":"], Quote:["'",'"'], Comma:[",","<"], Period:[".",">"], Slash:["/","?"], Backquote:["`","~"] };
 function physicalChar(e){
+    const c = e.code, shift = e.shiftKey;
     if(/^Key[A-Z]$/.test(c)){
         const ch = c[3].toLowerCase();
         return (shift !== e.getModifierState("CapsLock")) ? ch.toUpperCase() : ch;
@@ -167,10 +170,11 @@ document.addEventListener("keydown", e => {
     else if (e.key === "Escape"){ location.hash = "#/" + cat; }
     else if (e.key === " "){ e.preventDefault(); lastKeyAt = Date.now(); nextWord(); }
     else if (e.key === "Backspace"){ e.preventDefault(); backspace(); }
-    else if (e.key.lenght === 1){
+    else if (e.key.length === 1){
         e.preventDefault(); lastKeyAt = Date.now();
         let ch = e.key;
-        if (ch.charCodeAt (0) > 127 && expected && expected.charCodeAt(0) < 128){ ch = physicalChar(e) || ch; }
+        const expected = words[wi][typed.length];
+        if (ch.charCodeAt(0) > 127 && expected && expected.charCodeAt(0) < 128){ ch = physicalChar(e) || ch; }
         typeChar(ch);
     }
 });
@@ -183,6 +187,6 @@ input.addEventListener("input", () => {
 
 field.addEventListener("click", () => input.focus());
 $("again").addEventListener("click", reset);
-window.addEventListener("rezise", moveCaret);
+window.addEventListener("resize", moveCaret);
 
 route();
