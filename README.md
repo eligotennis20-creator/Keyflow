@@ -4,7 +4,7 @@ Type fast. Stay in flow.
 
 Keyflow is a free typing speed test with real sentences, proverbs, code and numbers. Pick what you want to practice, choose your time, and see how fast you really are.
 
-Play it here: keyflow-beryl.vercel.app
+Play it here: [keyflow-beryl.vercel.app](https://keyflow-beryl.vercel.app/)
 
 Keyflow is a hosted web app and is meant to be played on the live site. Local setup instructions are intentionally not provided, since upcoming features (like the leaderboard) will depend on the hosted version.
 
